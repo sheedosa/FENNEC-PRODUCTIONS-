@@ -21,18 +21,18 @@ const Hero = () => {
         <div className="absolute inset-0 z-20 film-grain pointer-events-none opacity-[0.05]" />
       </div>
 
-      <div className="relative z-40 text-center max-w-xl pt-24 sm:pt-20 px-4">
+      <div className="relative z-40 text-center max-w-xl w-full mx-auto pt-24 sm:pt-20 px-4">
         <h1
           className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-tight mb-6 text-white"
         >
           {t('home.hero_quote')}
         </h1>
         <p
-          className="text-sm sm:text-base font-light tracking-wide text-white/70 mb-10 max-w-sm"
+          className="text-sm sm:text-base font-light tracking-wide text-white/70 mb-10 max-w-sm mx-auto"
         >
           {t('home.hero_sub')}
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
             to="/portfolio"
             className="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden border border-white/20 transition-all hover:border-white"
