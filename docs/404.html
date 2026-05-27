@@ -4,11 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fennec Productions</title>
+    <!-- Fallback ICO for legacy browsers -->
     <link rel="icon" href="./images/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="./images/favicon-48.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon-180.png" />
+
+    <!-- Light mode favicons (black logo on white) -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-light-16.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-light-32.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="48x48" href="./images/favicon-light-48.png" media="(prefers-color-scheme: light)" />
+
+    <!-- Dark mode favicons (white logo on black) -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-dark-16.png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-dark-32.png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" sizes="48x48" href="./images/favicon-dark-48.png" media="(prefers-color-scheme: dark)" />
+
+    <!-- Apple touch icon — defaults to dark (looks good on both home screens) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon-dark-180.png" />
+
+    <!-- PWA manifest -->
     <link rel="manifest" href="./site.webmanifest" />
     
     <!-- Google Fonts: Preconnect for performance -->
@@ -46,9 +58,37 @@
     <link rel="preload" as="image" href="./images/logo.png" />
     <script>
       localStorage.setItem('i18nextLng', 'en');
+
+      // Live favicon swap when OS theme changes (no refresh needed)
+      (function () {
+        if (!window.matchMedia) return;
+        var mql = window.matchMedia('(prefers-color-scheme: dark)');
+        function setFavicon(isDark) {
+          var theme = isDark ? 'dark' : 'light';
+          var sizes = [
+            { size: '16x16',  attr: '16'  },
+            { size: '32x32',  attr: '32'  },
+            { size: '48x48',  attr: '48'  }
+          ];
+          // Remove any existing png icons
+          document.querySelectorAll('link[rel="icon"][type="image/png"]').forEach(function (el) { el.remove(); });
+          sizes.forEach(function (s) {
+            var link = document.createElement('link');
+            link.rel = 'icon';
+            link.type = 'image/png';
+            link.sizes = s.size;
+            link.href = './images/favicon-' + theme + '-' + s.attr + '.png?v=' + Date.now();
+            document.head.appendChild(link);
+          });
+        }
+        setFavicon(mql.matches);
+        mql.addEventListener
+          ? mql.addEventListener('change', function (e) { setFavicon(e.matches); })
+          : mql.addListener(function (e) { setFavicon(e.matches); });
+      })();
     </script>
-    <script type="module" crossorigin src="/assets/index-ByEMxoGk.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BKF60V12.css">
+    <script type="module" crossorigin src="/assets/index-DoT3AJDF.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Cp5QiUEA.css">
   </head>
   <body>
     <div id="root"></div>
