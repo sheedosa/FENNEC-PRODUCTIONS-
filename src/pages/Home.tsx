@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { SmoothImage } from "../components/ui/SmoothImage";
 import { MetadataLabel } from "../components/ui/MetadataLabel";
-
-import { useEffect, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -157,29 +157,87 @@ const QuoteSection = () => {
 
 const OnSetGrid = () => {
   const { t } = useTranslation();
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
   const projects = [
     { title: t('home.onset.p1_title'), thumbnail: "/images/car2.jpg", roll: "A04", scene: "12", take: "01" },
     { title: t('home.onset.p2_title'), thumbnail: "/images/field1.jpg", roll: "B02", scene: "45", take: "03" },
     { title: t('home.onset.p3_title'), thumbnail: "/images/woman3.jpg", roll: "A12", scene: "08", take: "05" },
     { title: t('home.onset.p4_title'), thumbnail: "/images/desert1.jpg", roll: "C07", scene: "21", take: "02" },
+    { title: t('home.onset.p5_title'), thumbnail: "/images/stadium1.jpg", roll: "D03", scene: "17", take: "04" },
   ];
+
+  const updateArrows = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+
+  useEffect(() => {
+    updateArrows();
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    return () => {
+      el.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
+    };
+  }, []);
+
+  const scrollByFrame = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const frame = el.querySelector<HTMLElement>("[data-frame]");
+    const step = (frame?.offsetWidth ?? 480) + 32;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
   return (
-    <section className="bg-black py-20 md:py-32 px-6 border-b border-gray-900">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-12 md:mb-20 text-center md:text-left">
+    <section className="bg-black py-20 md:py-32 border-b border-gray-900">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-12 md:mb-16 text-center md:text-left">
           <MetadataLabel text={t('home.onset.tag')} />
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tighter text-white">{t('home.onset.title')}</h2>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      </div>
+
+      <div className="relative group/strip">
+        <button
+          type="button"
+          aria-label={t('home.onset.prev')}
+          onClick={() => scrollByFrame(-1)}
+          disabled={!canPrev}
+          className={`hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 items-center justify-center bg-black/70 border border-white/10 text-white/80 hover:bg-black hover:text-white hover:border-white/30 transition-all duration-300 backdrop-blur-sm ${canPrev ? "opacity-0 group-hover/strip:opacity-100" : "opacity-0 pointer-events-none"}`}
+        >
+          <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
+        </button>
+        <button
+          type="button"
+          aria-label={t('home.onset.next')}
+          onClick={() => scrollByFrame(1)}
+          disabled={!canNext}
+          className={`hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 items-center justify-center bg-black/70 border border-white/10 text-white/80 hover:bg-black hover:text-white hover:border-white/30 transition-all duration-300 backdrop-blur-sm ${canNext ? "opacity-0 group-hover/strip:opacity-100" : "opacity-0 pointer-events-none"}`}
+        >
+          <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
+        </button>
+
+        <div
+          ref={scrollerRef}
+          className="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth px-6 md:px-12 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
           {projects.map((p, i) => (
-            <motion.div 
-              key={`stills-${i}`} 
+            <motion.div
+              key={`stills-${i}`}
+              data-frame
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: i * 0.1 }}
-              className="group"
+              transition={{ delay: i * 0.08 }}
+              className="group shrink-0 snap-start w-[80vw] sm:w-[60vw] md:w-[460px] lg:w-[520px]"
             >
               <div className="flex items-center justify-between font-mono text-[8px] uppercase tracking-[0.2em] text-white/30 mb-2">
                 <span>{t('home.onset.roll')} {p.roll}</span>
@@ -198,6 +256,10 @@ const OnSetGrid = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 mt-6 flex items-center justify-end font-mono text-[8px] uppercase tracking-[0.25em] text-white/30">
+          <span className={canNext ? "" : "opacity-0"}>{t('home.onset.scroll_hint')}</span>
         </div>
       </div>
     </section>

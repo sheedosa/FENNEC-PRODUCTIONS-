@@ -26,7 +26,11 @@
       "p1_title": "Production Still 01",
       "p2_title": "Production Still 02",
       "p3_title": "Production Still 03",
-      "p4_title": "Production Still 04"
+      "p4_title": "Production Still 04",
+      "p5_title": "Production Still 05",
+      "prev": "Previous frame",
+      "next": "Next frame",
+      "scroll_hint": "DRAG OR SCROLL →"
     },
     "about": {
       "tag": "ORIGIN_STORY",
