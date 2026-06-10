@@ -161,6 +161,7 @@ const OnSetGrid = () => {
     { title: t('home.onset.p1_title'), thumbnail: "/images/car2.jpg", roll: "A04", scene: "12", take: "01" },
     { title: t('home.onset.p2_title'), thumbnail: "/images/field1.jpg", roll: "B02", scene: "45", take: "03" },
     { title: t('home.onset.p3_title'), thumbnail: "/images/woman3.jpg", roll: "A12", scene: "08", take: "05" },
+    { title: t('home.onset.p4_title'), thumbnail: "/images/desert1.jpg", roll: "C07", scene: "21", take: "02" },
   ];
   return (
     <section className="bg-black py-20 md:py-32 px-6 border-b border-gray-900">
@@ -170,7 +171,7 @@ const OnSetGrid = () => {
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tighter text-white">{t('home.onset.title')}</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {projects.map((p, i) => (
             <motion.div 
               key={`stills-${i}`} 
