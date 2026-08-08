@@ -70,4 +70,9 @@
   .animate-scroll {
     animation: scroll 60s linear infinite;
   }
+  /* The client strip carries 12 logos, so it travels ~20% further than the HUD
+     tickers in the same 60s. Slow it to keep the original perceived pace. */
+  .animate-scroll-clients {
+    animation: scroll 72s linear infinite;
+  }
 }

@@ -68,7 +68,9 @@ const clientLogos = [
   "/images/client-7.png",
   "/images/client-8.png",
   "/images/client-9.png",
-  "/images/client-10.png"
+  "/images/client-10.png",
+  "/images/client-11.png",
+  "/images/client-12.png"
 ];
 
 const ClientsGrid = () => {
@@ -87,7 +89,7 @@ const ClientsGrid = () => {
         <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-20 pointer-events-none" />
         <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-20 pointer-events-none" />
         
-        <div className="w-fit flex animate-scroll whitespace-nowrap items-center">
+        <div className="w-fit flex animate-scroll-clients whitespace-nowrap items-center">
           {duplicatedLogos.map((id, i) => (
             <div key={`client-${i}`} className="w-40 sm:w-48 md:w-56 px-8 flex-shrink-0 flex items-center justify-center group">
               <SmoothImage
