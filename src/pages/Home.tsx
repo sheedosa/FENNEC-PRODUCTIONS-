@@ -170,6 +170,7 @@ const OnSetGrid = () => {
     { title: t('home.onset.p3_title'), thumbnail: "/images/woman3.jpg", roll: "A12", scene: "08", take: "05" },
     { title: t('home.onset.p4_title'), thumbnail: "/images/desert1.jpg", roll: "C07", scene: "21", take: "02" },
     { title: t('home.onset.p5_title'), thumbnail: "/images/stadium1.jpg", roll: "D03", scene: "17", take: "04" },
+    { title: t('home.onset.p6_title'), thumbnail: "/images/cement1.jpg", roll: "E01", scene: "33", take: "02" },
   ];
 
   const updateArrows = () => {
