@@ -70,7 +70,8 @@ const clientLogos = [
   "/images/client-9.png",
   "/images/client-10.png",
   "/images/client-11.png",
-  "/images/client-12.png"
+  "/images/client-12.png",
+  "/images/client-13.png"
 ];
 
 const ClientsGrid = () => {
